@@ -3,4 +3,4 @@
 
 LETTER=`awk -v "letter=$1" 'BEGIN{ print toupper(letter);}'`
 
-grep " $LETTER" morsecode | head -1 | awk '{printf "%s",$1}'
+grep " $LETTER" morsecode.txt | head -1 | awk '{printf "%s",$1}'
