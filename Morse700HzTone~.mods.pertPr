@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+<dict>
+		<key>mod_No</key>
+		<string>0</string>
+		<key>Type</key>
+		<string>COMPARATOR</string>
+		<key>Label</key>
+		<string>COMPARATOR_0</string>
+		<key>P_Label 1</key>
+		<string>initialise cmprtr</string>
+		<key>P_float 1</key>
+		<string>0</string>
+		<key>P_Label 2</key>
+		<string>initialise delay</string>
+		<key>P_float 2</key>
+		<string>0</string>
+	</dict>
+<dict>
+		<key>mod_No</key>
+		<string>1</string>
+		<key>Type</key>
+		<string>MATH</string>
+		<key>Label</key>
+		<string>MATH_0</string>
+	</dict>
+<dict>
+		<key>mod_No</key>
+		<string>2</string>
+		<key>Type</key>
+		<string>SCOPE</string>
+		<key>Label</key>
+		<string>SCOPE</string>
+	</dict>
+<dict>
+		<key>mod_No</key>
+		<string>3</string>
+		<key>Type</key>
+		<string>SYSTEM</string>
+		<key>Label</key>
+		<string>SYSTEM</string>
+	</dict>
+</array>
+</plist>

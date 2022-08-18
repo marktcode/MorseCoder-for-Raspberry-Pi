@@ -1,0 +1,24 @@
+#!/bin/sh
+#msSend [speed]
+#
+if test "$#" = "0"
+then
+SPEED=30
+else SPEED=`echo "480/$1" | bc -l`
+fi
+
+PATH=$PATH:.
+while true
+do
+read -p "Enter message: " MESSAGE
+#MESSAGE="The quick brown fox jumps over the lazy dog"
+if test "$MESSAGE"
+then
+#echo "$MESSAGE"
+for i in `echo "$MESSAGE" | fold -w 1 | sed -e '/ /s//<SP>/g' -e '/\./s//<.>/g'`
+do
+   mslookup "$i"
+done | fold -w 1 \
+| awk -v "speed=$SPEED" '{for (i=0; i < int(speed+0.5); i ++) print k++,$1}'  | pertecs -c Morse700HzTone~ -rate 48000 -ui 100 -ineof -rof 2> /dev/null | ./pa_audio  -r -i 2> /dev/null 
+fi
+done

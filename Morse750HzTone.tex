@@ -1,0 +1,74 @@
+			\input{schemacros}
+			%\CLEAN
+			\SHOWBLKS
+%%%%% TITLE  &  INSTANTIATION  %%%%%%%
+			\HEAD	{MORSE CODE OSCILLATOR}
+					{}
+
+%%%%% SCOPE  DEFINES  %%%%%%%
+			\GCOLR		{0}{1}{1}									% GRATICULE COLOUR
+			\GLIGHT 		{90}{0}									% GRATICULE LIGHT			
+			\GRATXY		{1.0}										% GRATICULE BRIGHTNESS
+			\GSPAN		{20}{6}{1}									% 10 x 6 x 6 DISPLAY VOL.
+			\GSCLE		{\linear{1}}{\linear{1}}{\linear{1}}					% Linear	
+			\SCDFLT 
+			\SCPO		{100}{200}								% SCOPE  WINDOW  ORIGON
+			\SCSZ		{2000}{600}								% SCOPE  WINDOW  SIZE
+			\LCKVW		{0}{0}									% SCOPE VIEW UNLOCKED VIEW
+			\BLKBCK
+		
+			\SCPTM		{96000}									% TRACE TIME (SAMPLES)
+			\TRCER		{.}										% TRACE LINE TYPE
+			\TRCEWT		{1.5}										% TRACE LINE WEIGHT
+
+%%%%% SUB CIRCUITS  %%%%%%%
+\SUBCIRC	\OSC#1{									%voltage controlled oscillator 
+			\REGSTR
+\U{1}			\SUMV		{5}{right}{0}
+\U{2}			\COMP						{0}{0}
+\U{11}		\NEW		{20}{above right}
+\T{11}{17}		\HVCL
+\U{17}		\SCALE		{5}{left}{0}			{-1}
+\T{23}{3}		\HVCL
+\U{1}			\LINE		{10}{left}
+\T{16}{17}		\HLINE
+\U{25}		\LINE		{15}{below}
+\T{26}{4}		\HVCL
+
+\U{11}		\NEW		{30}{right}
+\U{27}		\MATH
+\T{25}{27}		\HVCL
+			\JOIN
+\U{31}		\LINE		{15.2}{right}
+\U{24}		\OFFST		{0}{left}		{#1}
+
+\U{1}			\FRNEW		{25}{above}
+\U{34}		\FRNEW		{35}{below}
+\T{35}{36}		\FRAME		{0}{below right}			{OSCILLATOR}
+
+}
+
+
+
+\DEF			\tone		{.01458333}  %700Hz
+
+%%%%%  SCHEMA   %%%%%%%
+			\BLUE
+			\CIRCUIT		{0}				{0mm,30mm}
+			\OSC		{\tone}						
+\A{34}		\LINE		{20}{right}
+\A{37}		\MUL		{2}{right}{10}		{1}
+
+%%%%%  INPUT/OUTPUT   %%%%%%%
+
+\A{38}		\IN		{15}{below}			{KEY}
+			
+\A{43}		\OUT		{15}{right}			{TONE LEFT CH}
+			\LINE	{10}{below}
+\A{44}		\OUT		{15}{right}			{TONE RIGHT CH}
+
+
+\A{43}		\YTRACE		{cyan}{enable}
+			\JOIN
+			
+\END
