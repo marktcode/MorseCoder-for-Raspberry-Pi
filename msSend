@@ -19,6 +19,6 @@ for i in `echo "$MESSAGE" | fold -w 1 | sed -e '/ /s//<SP>/g' -e '/\./s//<.>/g'`
 do
    mslookup "$i"
 done | fold -w 1 \
-| awk -v "speed=$SPEED" '{for (i=0; i < int(speed+0.5); i ++) print k++,$1}'  | pertecs -c Morse700HzTone~ -rate 48000 -ui 100 -ineof -rof 2> /dev/null | ./pa_audio  -r -i 2> /dev/null 
+| awk -v "speed=$SPEED" '{for (i=0; i < int(speed+0.5); i ++) print k++,$1}'  | ./pertecs -c Morse700HzTone~ -rate 48000 -ui 100 -ineof -rof 2> /dev/null | ./pa_audio  -r -i 2> /dev/null 
 fi
 done
