@@ -1,0 +1,12 @@
+#!/bin/sh
+tc_new > /dev/null
+tc_decomp 111100000
+
+read -p "Enter message: " MESSAGE
+echo "$MESSAGE" > /tmp/message
+STRING=""`t_unpack -f /tmp/message`""
+
+for i in `tc_dec $STRING | awk '{for (i=1; i <=$3; i++) print $1}'`
+do grep "^$i" enigma.tex 
+done | awk '{i++; printf "%c",toupper($3); if (i==5) {i=0; printf " ";}}'
+echo '.'
