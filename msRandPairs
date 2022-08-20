@@ -1,19 +1,28 @@
 #!/bin/sh
-if test "$#" = "0"
-then
-SPEED=30
-else SPEED=`echo "480/$1" | bc -l`
-fi
+NUMBER=1
+PACE=1
+
+
+case $# in
+1) SPEED=`echo "scale=2; 480/$1" | bc -l`;;
+2) SPEED=`echo "scale=2; 480/$1" | bc -l`
+   NUMBER=$2;;
+3) SPEED=`echo "scale=2; 480/$1" | bc -l`
+   NUMBER=$2
+   PACE=$3;;
+0) echo usage: msRandom [wpm] [repeats] [pace\(seconds\)]
+    exit ;;
+esac
 
 for i in `awk 'BEGIN{for (i=0; i < 100 ; i++) printf "%c%c ", 65+ int(26*rand()),65+ int(26*rand())}'`
 do 
 echo $i
-for k in 1 2 3 4 5
+for k in `awk -v "number=$NUMBER" 'BEGIN{if ((number >= 1) && (number <= 8)) {} else number = 1;  for (i=1; i <= number; i++) print i}'`
 do 
 for j in `echo "$i" | fold -w 1 | sed -e '/ /s//<SP>/g' -e '/\./s//<.>/g'`
 do ./mslookup $j
 done | fold -w 1 | awk -v "speed=$SPEED" '{for (i=0; i < int(speed+0.5); i ++) print k++,$1}'  | ./pertecs -c Morse700HzTone~ -rate 48000 -ui 100 -ineof -rof 2> /dev/null | ./pa_audio  -r -i 2> /dev/null 
-sleep 3
+sleep $PACE
 done 
 done
 
