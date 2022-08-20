@@ -1,0 +1,21 @@
+#!/bin/sh
+if test "$#" = "0"
+then
+SPEED=30
+else SPEED=`echo "480/$1" | bc -l`
+fi
+
+for i in `awk 'BEGIN{for (i=0; i < 100 ; i++) printf "%c%c ", 65+ int(26*rand()),65+ int(26*rand())}'`
+do 
+echo $i
+for k in 1 2 3 4 5
+do 
+for j in `echo "$i" | fold -w 1 | sed -e '/ /s//<SP>/g' -e '/\./s//<.>/g'`
+do ./mslookup $j
+done | fold -w 1 | awk -v "speed=$SPEED" '{for (i=0; i < int(speed+0.5); i ++) print k++,$1}'  | ./pertecs -c Morse700HzTone~ -rate 48000 -ui 100 -ineof -rof 2> /dev/null | ./pa_audio  -r -i 2> /dev/null 
+sleep 3
+done 
+done
+
+
+

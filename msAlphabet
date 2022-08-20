@@ -1,0 +1,27 @@
+#!/bin/sh
+NUMBER=4
+PACE=0.2
+
+case $# in
+1) SPEED=`echo "scale=2; 480/$1" | bc -l`;;
+2) SPEED=`echo "scale=2; 480/$1" | bc -l`
+   NUMBER=$2
+   ;;
+3) SPEED=`echo "scale=2; 480/$1" | bc -l`
+   NUMBER=$2
+   PACE=$3
+   ;;
+0) echo usage: msAlphabet [wpm] [repeats] [pace_seconds]
+   exit ;;
+esac
+
+
+for i in `awk 'BEGIN{for (i=0; i < 26; i++) printf "%c ", 65+ i}'`
+do 
+echo $i
+for j in `awk -v "number=$NUMBER" 'BEGIN{if ((number >= 1) && (number <= 8)) {} else number = 2;  for (i=1; i < number; i++) print i}'`
+do ./mslookup $i 
+done | fold -w 1 | awk -v "speed=$SPEED" '{for (i=0; i < int(speed+0.5); i ++) print k++,$1}'  | ./pertecs -c Morse700HzTone~ -rate 48000 -ui 100 -ineof -rof 2> /dev/null | ./pa_audio  -r -i 2> /dev/null 
+sleep $PACE
+done
+
